@@ -1,0 +1,74 @@
+"use client";
+import Image from "next/image";
+import styles from "./cbyuki.module.css";
+import { useEffect, useRef } from "react";
+import { useToast } from "@/components/ToastProvider";
+import confetti from "canvas-confetti";
+
+export default function cbYuki() {
+  const { showToast } = useToast();
+  const noBtnRef = useRef(null);
+
+  useEffect(() => {
+    const noBtn = noBtnRef.current;
+    if (!noBtn) return;
+
+    const moveButton = () => {
+      noBtn.style.position = "absolute";
+      noBtn.style.top = Math.random() * 80 + "vh";
+      noBtn.style.left = Math.random() * 80 + "vw";
+    };
+
+    noBtn.addEventListener("mouseenter", moveButton);
+
+    return () => {
+      noBtn.removeEventListener("mouseenter", moveButton);
+    };
+  }, []);
+
+  const handleClick = async () => {
+    try {
+      const res = await fetch("/api/send-yes-message", { method: "POST" });
+      if (res.ok) {
+        showToast(
+          "Окей, настроен на режим Daily Compliment 😎 Ты самая лучшая!",
+          "success"
+        );
+        confetti({ particleCount: 200, spread: 120, origin: { y: 0.6 } });
+        setTimeout(() => {
+          confetti({
+            particleCount: 100,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+          });
+          confetti({
+            particleCount: 100,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+          });
+        }, 500);
+      } else {
+        showToast("Ошибка отправки 😢", "error");
+      }
+    } catch (err) {
+      console.error(err);
+      showToast("Ошибка сети 😢", "error");
+    }
+  };
+
+  return (
+    <>
+      <div className={styles.mainContainer}>
+        <div className={styles.modal}>
+          <p>Хочешь что бы я каждый день говорил тебе что ты самая лучшая?</p>
+          <div className={styles.row}>
+            <button ref={noBtnRef}>Нет</button>
+            <button onClick={handleClick}>Да</button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

@@ -1,0 +1,44 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  width: 100%;
+  max-height: 200px;
+  height: 100%;
+  padding: 20px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.modal {
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.row button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #5eead4;
+  background-color: rgba(45, 212, 191, 0.1);
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 10px;
+  width: 200px;
+}
