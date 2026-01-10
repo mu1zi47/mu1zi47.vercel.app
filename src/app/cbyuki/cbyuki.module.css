@@ -11,17 +11,24 @@
 .modal {
   display: flex;
   flex-direction: column;
-  max-width: 500px;
-  width: 100%;
-  max-height: 200px;
-  height: 100%;
+  width: auto;
+  height: fit-content;
   padding: 20px;
   align-items: center;
   justify-content: space-around;
+  row-gap: 20px;
 }
 
-.modal {
-  text-align: center;
+.rowText{
+  display: flex;
+  flex-direction: row;
+}
+
+.text{
+  font-family: monospace;
+  font-size: 20px;
+  line-height: 1.2;
+  white-space: pre;
 }
 
 .row {
@@ -30,7 +37,7 @@
   gap: 10px;
 }
 
-.row button {
+.mainContainer button {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,4 +48,22 @@
   border-radius: 10px;
   padding: 10px;
   width: 150px;
+}
+
+@media screen and (max-width:820px) {
+  .text{
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width:570px) {
+  .text{
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width:410px) {
+  .text{
+    font-size: 8px;
+  }
 }
