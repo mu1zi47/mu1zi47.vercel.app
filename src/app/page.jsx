@@ -377,7 +377,7 @@ export default function Home() {
               <div className={styles.footerSection}>
                 <p className={styles.hover}>© mu1zi47 2025</p>
                 <div className={styles.navSocialButtonsRow}>
-                  <Link href={"https://t.me/mu1zi47"}>
+                  <Link href={"https://t.me/ThePr0bl3m"}>
                     <Image
                       src="/telegram.svg"
                       alt="telegram"
@@ -393,7 +393,7 @@ export default function Home() {
                       height={24}
                     />
                   </Link>
-                  <Link href={"https://instagram.com/mu1zi47/"}>
+                  <Link href={"https://www.instagram.com/thepr0b13m/"}>
                     <Image
                       src="/insta.svg"
                       alt="insta"
