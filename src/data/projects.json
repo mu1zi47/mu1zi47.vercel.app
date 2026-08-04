@@ -1,13 +1,5 @@
 [
   {
-    "id": 1,
-    "name": "BimRetail.uz",
-    "link": "https://bimretail.uz",
-    "image": "/projects/bimretail.png",
-    "description": "BIM Retail is a young and growing brand in Tashkent that combines a café with a specialized Korean goods store. It focuses on delicious drinks, trendy snacks, and a vibrant atmosphere, actively expanding its network through franchising.",
-    "technologies": ["Next.js", "CSS", "Motion", "Axios"]
-  },
-  {
     "id": 2,
     "name": "mu1zi47.vercel.app",
     "link": "https://mu1zi47.vercel.app",
