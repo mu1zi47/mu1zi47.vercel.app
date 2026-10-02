@@ -22,5 +22,13 @@
     "image": "/projects/hilol.png",
     "description": "hilol.uz is a modern e-commerce platform designed to provide users with a convenient and seamless online shopping experience. The project features a clean and responsive interface, intuitive navigation, interactive elements, and smooth user interactions. The development focused on performance, usability, and maintaining a consistent visual experience across different devices.",
     "technologies": ["Angular", "CSS", "Swiper.js"]
+  },
+  {
+    "id": 4,
+    "name": "psyeco.uz",
+    "link": "https://psyeco.uz",
+    "image": "/projects/psyeco.png",
+    "description": "psyeco.uz is a modern platform focused on psychological well-being and helping users find suitable specialists. The project combines a clean and modern design with intuitive navigation, a responsive interface, and smooth user interactions. Special attention was given to clear information presentation, ease of use, and creating a comfortable digital experience for users.",
+    "technologies": ["Next.js", "CSS", "Swiper.js", "Motion", "Axios"]
   }
 ]
