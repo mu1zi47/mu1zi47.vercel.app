@@ -21,16 +21,23 @@ export default async function handler(req, res) {
 💬 Сообщение: ${message}
     `;
 
-    // Отправка в Telegram
-    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text,
-        parse_mode: "Markdown",
-      }),
-    });
+    // Отправка в Telegram (без parse_mode: "_" или "*" в нике/сообщении ломали Markdown и Telegram отклонял сообщение)
+    const tgResponse = await fetch(
+      `https://api.telegram.org/bot${botToken}/sendMessage`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text,
+        }),
+      },
+    );
+
+    if (!tgResponse.ok) {
+      console.error("Telegram API error:", await tgResponse.text());
+      return res.status(502).json({ error: "Failed to send message" });
+    }
 
     return res.status(200).json({ success: true });
   } catch (error) {

@@ -2,12 +2,54 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./nav.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
+
+const HIGHLIGHT_CLASS = "section-highlight";
+let highlightTimeout;
+
+// Скроллит к секции и на пару секунд подсвечивает её (как в Telegram при переходе к сообщению)
+const scrollToSection = (id) => {
+  const section = document.getElementById(id);
+  if (!section) return;
+  section.scrollIntoView();
+
+  document.querySelectorAll(`.${HIGHLIGHT_CLASS}`).forEach((el) => el.classList.remove(HIGHLIGHT_CLASS));
+  void section.offsetWidth; // перезапуск анимации при повторном клике на ту же секцию
+  section.classList.add(HIGHLIGHT_CLASS);
+
+  clearTimeout(highlightTimeout);
+  highlightTimeout = setTimeout(() => section.classList.remove(HIGHLIGHT_CLASS), 2500);
+};
+
+const SECTION_IDS = ["about", "skills", "projects", "contacts"];
+
+// Переход из навбара не добавляет #hash в ссылку, а если зашли по ссылке с #hash — убирает его
+const goToSection = (id) => {
+  if (window.location.hash) {
+    window.history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
+  scrollToSection(id);
+};
 
 export default function Nav() {
   const [modal, setModal] = useState(false);
 
+  // Переход по ссылке вида /#contacts — скроллим к секции и подсвечиваем её
+  useEffect(() => {
+    const highlightFromHash = () => {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      if (SECTION_IDS.includes(id)) scrollToSection(id);
+    };
+
+    // ждём, пока секции проявятся (stagger-анимация в page.jsx), иначе подсветка пройдёт по ещё прозрачной секции
+    const timeout = setTimeout(highlightFromHash, 800);
+    window.addEventListener("hashchange", highlightFromHash);
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener("hashchange", highlightFromHash);
+    };
+  }, []);
 
   return (
     <>
@@ -15,16 +57,16 @@ export default function Nav() {
         <div className={styles.nav}>
           <Link href={'/'}><h1>mu1zi47</h1></Link>
           <div className={styles.navCenterButtons}>
-            <button onClick={() => document.getElementById("about")?.scrollIntoView()}>
+            <button onClick={() => goToSection("about")}>
               <p>About</p>
             </button>
-            <button onClick={() => document.getElementById("skills")?.scrollIntoView()}>
+            <button onClick={() => goToSection("skills")}>
                 <p>Skills</p>
             </button>
-            <button onClick={() => document.getElementById("projects")?.scrollIntoView()}>
+            <button onClick={() => goToSection("projects")}>
               <p>Projects</p>
             </button>
-            <button onClick={() => document.getElementById("contacts")?.scrollIntoView()}>
+            <button onClick={() => goToSection("contacts")}>
               <p>Contacts</p>
             </button>
           </div>
@@ -38,16 +80,16 @@ export default function Nav() {
         </div>
         {modal ? (
           <motion.div initial={{y:-20}} animate={{y:0}} exit={{y:-20}} transition={{duration:0.2}} className={styles.adaptiveModalBox}>
-            <button onClick={() => {setModal(false), setTimeout(() => {document.getElementById("about")?.scrollIntoView()}, 200)}}>
+            <button onClick={() => {setModal(false), setTimeout(() => {goToSection("about")}, 200)}}>
               <p>About</p>
             </button>
-            <button onClick={() => {setModal(false), setTimeout(() => {document.getElementById("skills")?.scrollIntoView()}, 200)}}>
+            <button onClick={() => {setModal(false), setTimeout(() => {goToSection("skills")}, 200)}}>
                 <p>Skills</p>
             </button>
-            <button onClick={() => {setModal(false), setTimeout(() => {document.getElementById("projects")?.scrollIntoView()}, 200)}}>
+            <button onClick={() => {setModal(false), setTimeout(() => {goToSection("projects")}, 200)}}>
               <p>Projects</p>
             </button>
-            <button onClick={() => {setModal(false), setTimeout(() => {document.getElementById("contacts")?.scrollIntoView()}, 200)}}>
+            <button onClick={() => {setModal(false), setTimeout(() => {goToSection("contacts")}, 200)}}>
               <p>Contacts</p>
             </button>
             {/* <div className={styles.rowLanguages}>

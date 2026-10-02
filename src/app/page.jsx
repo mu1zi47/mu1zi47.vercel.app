@@ -5,7 +5,7 @@ import styles from "./home.module.css";
 import useApi from "@/utils/api";
 import Nav from "@/components/nav";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { motion } from "motion/react";
@@ -52,9 +52,15 @@ export default function Home() {
     Cookies.get("telegramUser") || "",
   );
   const [message, setMessage] = useState("");
+  const [sending, setSending] = useState(false);
+  // ref обновляется синхронно, поэтому блокирует даже очень быстрые повторные клики
+  const sendingRef = useRef(false);
 
   const disabledButton =
-    name.length === 0 || telegramUser.length === 1 || message.length === 0;
+    sending ||
+    name.length === 0 ||
+    telegramUser.length <= 1 ||
+    message.length === 0;
   const handleNameChange = (e) => {
     const value = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s]/g, "");
     setName(value);
@@ -100,6 +106,7 @@ export default function Home() {
   ];
 
   const handleSendMessage = async () => {
+    if (sendingRef.current) return;
     const lastSent = Cookies.get("sentMessage");
     if (lastSent) {
       showToast(
@@ -109,12 +116,17 @@ export default function Home() {
       setMessage("");
       return;
     }
+    sendingRef.current = true;
+    setSending(true);
     try {
-      await fetch("/api/send-message", {
+      const res = await fetch("/api/send-message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, telegramUser, message }),
       });
+      if (!res.ok) {
+        throw new Error(`Send failed with status ${res.status}`);
+      }
       Cookies.set("sentMessage", "true", { expires: 1 });
       let toastMessage = "";
 
@@ -145,6 +157,9 @@ export default function Home() {
         errorMessages[Math.floor(Math.random() * errorMessages.length)];
       showToast(randomError, "error");
       setMessage("");
+    } finally {
+      sendingRef.current = false;
+      setSending(false);
     }
   };
 
@@ -370,7 +385,7 @@ export default function Home() {
                   disabled={disabledButton}
                   className={styles.sendMessage}
                 >
-                  <p>Send Message</p>
+                  <p>{sending ? "Sending..." : "Send Message"}</p>
                 </button>
               </motion.div>
               <div className={styles.footerSection}>
