@@ -1,6 +1,6 @@
 [
   {
-    "id": 2,
+    "id": 1,
     "name": "mu1zi47.vercel.app",
     "link": "https://mu1zi47.vercel.app",
     "image": "/projects/mu1zi47.vercel.png",
@@ -8,11 +8,19 @@
     "technologies": ["Next.js", "CSS", "Swiper.js", "Motion", "Axios"]
   },
   {
-    "id": 3,
+    "id": 2,
     "name": "mu1zi47-qrcodes.vercel.app",
     "link": "https://mu1zi47-qrcodes.vercel.app",
     "image": "/projects/mu1zi47-qrcodes.vercel.app.png",
     "description": "mu1zi47-qrcodes.vercel.app is a simple and powerful QR code generator that allows users to create customized QR codes with logos, colors, and text. Built with modern web technologies, it focuses on clean design, speed, and user-friendly experience for both personal and business use.",
     "technologies": ["Next.js", "CSS", "Motion"]
+  },
+  {
+    "id": 3,
+    "name": "hilol.uz",
+    "link": "https://hilol.uz",
+    "image": "/projects/hilol.png",
+    "description": "hilol.uz is a modern e-commerce platform designed to provide users with a convenient and seamless online shopping experience. The project features a clean and responsive interface, intuitive navigation, interactive elements, and smooth user interactions. The development focused on performance, usability, and maintaining a consistent visual experience across different devices.",
+    "technologies": ["Angular", "CSS", "Swiper.js"]
   }
 ]

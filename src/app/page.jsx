@@ -49,7 +49,7 @@ export default function Home() {
 
   const [name, setName] = useState(Cookies.get("userName") || "");
   const [telegramUser, setTelegramUser] = useState(
-    Cookies.get("telegramUser") || ""
+    Cookies.get("telegramUser") || "",
   );
   const [message, setMessage] = useState("");
 
@@ -104,7 +104,7 @@ export default function Home() {
     if (lastSent) {
       showToast(
         "You have already sent a message. Please try again later (in 24 hours).",
-        "error"
+        "error",
       );
       setMessage("");
       return;
@@ -165,7 +165,7 @@ export default function Home() {
           currentIndex = 0;
           showToast(
             `Secret mode activated… but nothing changed. Or did it? 👀`,
-            "success"
+            "success",
           );
           confetti({ particleCount: 200, spread: 120, origin: { y: 0.6 } });
           setTimeout(() => {
@@ -223,11 +223,10 @@ export default function Home() {
                   optimized for performance and usability.
                   <br />
                   <br />
-                  So far, most of my work has been on personal projects,
-                  including
-                  <Link href={"https://comica.tcats.uz"}> Comica TCats</Link>,
-                  where I focused on creating a seamless and visually engaging
-                  experience.
+                  So far, I’ve worked on various projects, including <Link target="_blank" href={"https://hilol.uz"}>Hilol.uz</Link>,
+                  where I focused on developing and refining the user interface,
+                  paying close attention to code quality, usability, and visual
+                  precision.
                   <br />
                   <br />
                   I’m always exploring new technologies and improving my craft
